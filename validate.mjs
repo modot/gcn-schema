@@ -7,25 +7,25 @@ import { glob as baseGlob } from 'glob'
 const ajv = new Ajv({
   validateSchema: true,
   verbose: true,
-  allowUnionTypes: true
+  allowUnionTypes: true,
 })
 addFormats(ajv)
 ajv.addMetaSchema(meta)
 
-async function glob (path) {
+async function glob(path) {
   return await baseGlob(path, {
-    ignore: ['test/**', 'node_modules/**']
+    ignore: ['test/**', 'node_modules/**'],
   })
 }
 
 /** @param {string} path */
-async function validate (path) {
+async function validate(path) {
   const schemaFilenames = await glob('**/*.schema.json')
   const schemas = await Promise.all(
     schemaFilenames.map(async (match) =>
       JSON.parse(
         await readFile(match, {
-          encoding: 'utf-8'
+          encoding: 'utf-8',
         })
       )
     )
@@ -47,7 +47,7 @@ async function validate (path) {
     exampleFilenames.map(async (path) => {
       const example = JSON.parse(
         await readFile(path, {
-          encoding: 'utf-8'
+          encoding: 'utf-8',
         })
       )
 
